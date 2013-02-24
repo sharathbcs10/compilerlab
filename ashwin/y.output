@@ -1,0 +1,1223 @@
+Terminals unused in grammar
+
+   TYPE
+   '+'
+   '-'
+   '*'
+   '/'
+
+
+State 70 conflicts: 2 shift/reduce
+State 94 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: global_decl main
+
+    2 global_decl: DECL declarations ENDDECL
+    3            | /* empty */
+
+    4 declarations: INTEGER var vars ';' declarations
+    5             | BOOLEAN var vars ';' declarations
+    6             | /* empty */
+
+    7 var: ID
+    8    | ID '[' NUMBER ']'
+
+    9 vars: ',' var vars
+   10     | /* empty */
+
+   11 main: INTEGER MAIN '(' ')' '{' local_decl body '}'
+
+   12 local_decl: DECL local_declarations ENDDECL
+   13           | /* empty */
+
+   14 local_declarations: INTEGER ID loc_vars ';' local_declarations
+   15                   | BOOLEAN ID loc_vars ';' local_declarations
+   16                   | /* empty */
+
+   17 loc_vars: ',' ID loc_vars
+   18         | /* empty */
+
+   19 body: BEG statements RETURN NUMBER ';' END
+
+   20 statements: statement ';' statements
+   21           | /* empty */
+
+   22 statement: assignment
+   23          | conditional
+   24          | iterative
+   25          | io
+   26          | /* empty */
+
+   27 assignment: var '=' expr
+
+   28 conditional: IF log_expr THEN statements ENDIF
+   29            | IF log_expr THEN statements ELSE statements ENDIF
+
+   30 iterative: WHILE log_expr DO statements ENDWHILE
+
+   31 io: READ '(' var ')'
+   32   | WRITE '(' arith_expr ')'
+
+   33 expr: arith_expr
+   34     | log_expr
+
+   35 arith_expr: arith_expr MATHOP arith_expr
+   36           | ID
+   37           | NUMBER
+   38           | ID '[' arith_expr ']'
+   39           | '(' arith_expr ')'
+
+   40 log_expr: log_expr AND log_expr
+   41         | log_expr OR log_expr
+   42         | NOT log_expr
+   43         | arith_expr RELOP arith_expr
+   44         | '(' log_expr ')'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'(' (40) 11 31 32 39 44
+')' (41) 11 31 32 39 44
+'*' (42)
+'+' (43)
+',' (44) 9 17
+'-' (45)
+'/' (47)
+';' (59) 4 5 14 15 19 20
+'=' (61) 27
+'[' (91) 8 38
+']' (93) 8 38
+'{' (123) 11
+'}' (125) 11
+error (256)
+IF (258) 28 29
+ELSE (259) 29
+ENDIF (260) 28 29
+DECL (261) 2 12
+ENDDECL (262) 2 12
+BEG (263) 19
+END (264) 19
+WHILE (265) 30
+DO (266) 30
+ENDWHILE (267) 30
+RETURN (268) 19
+READ (269) 31
+WRITE (270) 32
+TYPE (271)
+MAIN (272) 11
+THEN (273) 28 29
+NOT (274) 42
+BOOLEAN (275) 5 15
+AND (276) 40
+OR (277) 41
+INTEGER (278) 4 11 14
+NUMBER (279) 8 19 37
+ID (280) 7 8 14 15 17 36 38
+MATHOP (281) 35
+RELOP (282) 43
+
+
+Nonterminals, with rules where they appear
+
+$accept (41)
+    on left: 0
+program (42)
+    on left: 1, on right: 0
+global_decl (43)
+    on left: 2 3, on right: 1
+declarations (44)
+    on left: 4 5 6, on right: 2 4 5
+var (45)
+    on left: 7 8, on right: 4 5 9 27 31
+vars (46)
+    on left: 9 10, on right: 4 5 9
+main (47)
+    on left: 11, on right: 1
+local_decl (48)
+    on left: 12 13, on right: 11
+local_declarations (49)
+    on left: 14 15 16, on right: 12 14 15
+loc_vars (50)
+    on left: 17 18, on right: 14 15 17
+body (51)
+    on left: 19, on right: 11
+statements (52)
+    on left: 20 21, on right: 19 20 28 29 30
+statement (53)
+    on left: 22 23 24 25 26, on right: 20
+assignment (54)
+    on left: 27, on right: 22
+conditional (55)
+    on left: 28 29, on right: 23
+iterative (56)
+    on left: 30, on right: 24
+io (57)
+    on left: 31 32, on right: 25
+expr (58)
+    on left: 33 34, on right: 27
+arith_expr (59)
+    on left: 35 36 37 38 39, on right: 32 33 35 38 39 43
+log_expr (60)
+    on left: 40 41 42 43 44, on right: 28 29 30 34 40 41 42 44
+
+
+state 0
+
+    0 $accept: . program $end
+
+    DECL  shift, and go to state 1
+
+    $default  reduce using rule 3 (global_decl)
+
+    program      go to state 2
+    global_decl  go to state 3
+
+
+state 1
+
+    2 global_decl: DECL . declarations ENDDECL
+
+    BOOLEAN  shift, and go to state 4
+    INTEGER  shift, and go to state 5
+
+    $default  reduce using rule 6 (declarations)
+
+    declarations  go to state 6
+
+
+state 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 7
+
+
+state 3
+
+    1 program: global_decl . main
+
+    INTEGER  shift, and go to state 8
+
+    main  go to state 9
+
+
+state 4
+
+    5 declarations: BOOLEAN . var vars ';' declarations
+
+    ID  shift, and go to state 10
+
+    var  go to state 11
+
+
+state 5
+
+    4 declarations: INTEGER . var vars ';' declarations
+
+    ID  shift, and go to state 10
+
+    var  go to state 12
+
+
+state 6
+
+    2 global_decl: DECL declarations . ENDDECL
+
+    ENDDECL  shift, and go to state 13
+
+
+state 7
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+state 8
+
+   11 main: INTEGER . MAIN '(' ')' '{' local_decl body '}'
+
+    MAIN  shift, and go to state 14
+
+
+state 9
+
+    1 program: global_decl main .
+
+    $default  reduce using rule 1 (program)
+
+
+state 10
+
+    7 var: ID .
+    8    | ID . '[' NUMBER ']'
+
+    '['  shift, and go to state 15
+
+    $default  reduce using rule 7 (var)
+
+
+state 11
+
+    5 declarations: BOOLEAN var . vars ';' declarations
+
+    ','  shift, and go to state 16
+
+    $default  reduce using rule 10 (vars)
+
+    vars  go to state 17
+
+
+state 12
+
+    4 declarations: INTEGER var . vars ';' declarations
+
+    ','  shift, and go to state 16
+
+    $default  reduce using rule 10 (vars)
+
+    vars  go to state 18
+
+
+state 13
+
+    2 global_decl: DECL declarations ENDDECL .
+
+    $default  reduce using rule 2 (global_decl)
+
+
+state 14
+
+   11 main: INTEGER MAIN . '(' ')' '{' local_decl body '}'
+
+    '('  shift, and go to state 19
+
+
+state 15
+
+    8 var: ID '[' . NUMBER ']'
+
+    NUMBER  shift, and go to state 20
+
+
+state 16
+
+    9 vars: ',' . var vars
+
+    ID  shift, and go to state 10
+
+    var  go to state 21
+
+
+state 17
+
+    5 declarations: BOOLEAN var vars . ';' declarations
+
+    ';'  shift, and go to state 22
+
+
+state 18
+
+    4 declarations: INTEGER var vars . ';' declarations
+
+    ';'  shift, and go to state 23
+
+
+state 19
+
+   11 main: INTEGER MAIN '(' . ')' '{' local_decl body '}'
+
+    ')'  shift, and go to state 24
+
+
+state 20
+
+    8 var: ID '[' NUMBER . ']'
+
+    ']'  shift, and go to state 25
+
+
+state 21
+
+    9 vars: ',' var . vars
+
+    ','  shift, and go to state 16
+
+    $default  reduce using rule 10 (vars)
+
+    vars  go to state 26
+
+
+state 22
+
+    5 declarations: BOOLEAN var vars ';' . declarations
+
+    BOOLEAN  shift, and go to state 4
+    INTEGER  shift, and go to state 5
+
+    $default  reduce using rule 6 (declarations)
+
+    declarations  go to state 27
+
+
+state 23
+
+    4 declarations: INTEGER var vars ';' . declarations
+
+    BOOLEAN  shift, and go to state 4
+    INTEGER  shift, and go to state 5
+
+    $default  reduce using rule 6 (declarations)
+
+    declarations  go to state 28
+
+
+state 24
+
+   11 main: INTEGER MAIN '(' ')' . '{' local_decl body '}'
+
+    '{'  shift, and go to state 29
+
+
+state 25
+
+    8 var: ID '[' NUMBER ']' .
+
+    $default  reduce using rule 8 (var)
+
+
+state 26
+
+    9 vars: ',' var vars .
+
+    $default  reduce using rule 9 (vars)
+
+
+state 27
+
+    5 declarations: BOOLEAN var vars ';' declarations .
+
+    $default  reduce using rule 5 (declarations)
+
+
+state 28
+
+    4 declarations: INTEGER var vars ';' declarations .
+
+    $default  reduce using rule 4 (declarations)
+
+
+state 29
+
+   11 main: INTEGER MAIN '(' ')' '{' . local_decl body '}'
+
+    DECL  shift, and go to state 30
+
+    $default  reduce using rule 13 (local_decl)
+
+    local_decl  go to state 31
+
+
+state 30
+
+   12 local_decl: DECL . local_declarations ENDDECL
+
+    BOOLEAN  shift, and go to state 32
+    INTEGER  shift, and go to state 33
+
+    $default  reduce using rule 16 (local_declarations)
+
+    local_declarations  go to state 34
+
+
+state 31
+
+   11 main: INTEGER MAIN '(' ')' '{' local_decl . body '}'
+
+    BEG  shift, and go to state 35
+
+    body  go to state 36
+
+
+state 32
+
+   15 local_declarations: BOOLEAN . ID loc_vars ';' local_declarations
+
+    ID  shift, and go to state 37
+
+
+state 33
+
+   14 local_declarations: INTEGER . ID loc_vars ';' local_declarations
+
+    ID  shift, and go to state 38
+
+
+state 34
+
+   12 local_decl: DECL local_declarations . ENDDECL
+
+    ENDDECL  shift, and go to state 39
+
+
+state 35
+
+   19 body: BEG . statements RETURN NUMBER ';' END
+
+    IF     shift, and go to state 40
+    WHILE  shift, and go to state 41
+    READ   shift, and go to state 42
+    WRITE  shift, and go to state 43
+    ID     shift, and go to state 10
+
+    ';'       reduce using rule 26 (statement)
+    $default  reduce using rule 21 (statements)
+
+    var          go to state 44
+    statements   go to state 45
+    statement    go to state 46
+    assignment   go to state 47
+    conditional  go to state 48
+    iterative    go to state 49
+    io           go to state 50
+
+
+state 36
+
+   11 main: INTEGER MAIN '(' ')' '{' local_decl body . '}'
+
+    '}'  shift, and go to state 51
+
+
+state 37
+
+   15 local_declarations: BOOLEAN ID . loc_vars ';' local_declarations
+
+    ','  shift, and go to state 52
+
+    $default  reduce using rule 18 (loc_vars)
+
+    loc_vars  go to state 53
+
+
+state 38
+
+   14 local_declarations: INTEGER ID . loc_vars ';' local_declarations
+
+    ','  shift, and go to state 52
+
+    $default  reduce using rule 18 (loc_vars)
+
+    loc_vars  go to state 54
+
+
+state 39
+
+   12 local_decl: DECL local_declarations ENDDECL .
+
+    $default  reduce using rule 12 (local_decl)
+
+
+state 40
+
+   28 conditional: IF . log_expr THEN statements ENDIF
+   29            | IF . log_expr THEN statements ELSE statements ENDIF
+
+    NOT     shift, and go to state 55
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 58
+
+    arith_expr  go to state 59
+    log_expr    go to state 60
+
+
+state 41
+
+   30 iterative: WHILE . log_expr DO statements ENDWHILE
+
+    NOT     shift, and go to state 55
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 58
+
+    arith_expr  go to state 59
+    log_expr    go to state 61
+
+
+state 42
+
+   31 io: READ . '(' var ')'
+
+    '('  shift, and go to state 62
+
+
+state 43
+
+   32 io: WRITE . '(' arith_expr ')'
+
+    '('  shift, and go to state 63
+
+
+state 44
+
+   27 assignment: var . '=' expr
+
+    '='  shift, and go to state 64
+
+
+state 45
+
+   19 body: BEG statements . RETURN NUMBER ';' END
+
+    RETURN  shift, and go to state 65
+
+
+state 46
+
+   20 statements: statement . ';' statements
+
+    ';'  shift, and go to state 66
+
+
+state 47
+
+   22 statement: assignment .
+
+    $default  reduce using rule 22 (statement)
+
+
+state 48
+
+   23 statement: conditional .
+
+    $default  reduce using rule 23 (statement)
+
+
+state 49
+
+   24 statement: iterative .
+
+    $default  reduce using rule 24 (statement)
+
+
+state 50
+
+   25 statement: io .
+
+    $default  reduce using rule 25 (statement)
+
+
+state 51
+
+   11 main: INTEGER MAIN '(' ')' '{' local_decl body '}' .
+
+    $default  reduce using rule 11 (main)
+
+
+state 52
+
+   17 loc_vars: ',' . ID loc_vars
+
+    ID  shift, and go to state 67
+
+
+state 53
+
+   15 local_declarations: BOOLEAN ID loc_vars . ';' local_declarations
+
+    ';'  shift, and go to state 68
+
+
+state 54
+
+   14 local_declarations: INTEGER ID loc_vars . ';' local_declarations
+
+    ';'  shift, and go to state 69
+
+
+state 55
+
+   42 log_expr: NOT . log_expr
+
+    NOT     shift, and go to state 55
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 58
+
+    arith_expr  go to state 59
+    log_expr    go to state 70
+
+
+state 56
+
+   37 arith_expr: NUMBER .
+
+    $default  reduce using rule 37 (arith_expr)
+
+
+state 57
+
+   36 arith_expr: ID .
+   38           | ID . '[' arith_expr ']'
+
+    '['  shift, and go to state 71
+
+    $default  reduce using rule 36 (arith_expr)
+
+
+state 58
+
+   39 arith_expr: '(' . arith_expr ')'
+   44 log_expr: '(' . log_expr ')'
+
+    NOT     shift, and go to state 55
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 58
+
+    arith_expr  go to state 72
+    log_expr    go to state 73
+
+
+state 59
+
+   35 arith_expr: arith_expr . MATHOP arith_expr
+   43 log_expr: arith_expr . RELOP arith_expr
+
+    MATHOP  shift, and go to state 74
+    RELOP   shift, and go to state 75
+
+
+state 60
+
+   28 conditional: IF log_expr . THEN statements ENDIF
+   29            | IF log_expr . THEN statements ELSE statements ENDIF
+   40 log_expr: log_expr . AND log_expr
+   41         | log_expr . OR log_expr
+
+    THEN  shift, and go to state 76
+    AND   shift, and go to state 77
+    OR    shift, and go to state 78
+
+
+state 61
+
+   30 iterative: WHILE log_expr . DO statements ENDWHILE
+   40 log_expr: log_expr . AND log_expr
+   41         | log_expr . OR log_expr
+
+    DO   shift, and go to state 79
+    AND  shift, and go to state 77
+    OR   shift, and go to state 78
+
+
+state 62
+
+   31 io: READ '(' . var ')'
+
+    ID  shift, and go to state 10
+
+    var  go to state 80
+
+
+state 63
+
+   32 io: WRITE '(' . arith_expr ')'
+
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 81
+
+    arith_expr  go to state 82
+
+
+state 64
+
+   27 assignment: var '=' . expr
+
+    NOT     shift, and go to state 55
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 58
+
+    expr        go to state 83
+    arith_expr  go to state 84
+    log_expr    go to state 85
+
+
+state 65
+
+   19 body: BEG statements RETURN . NUMBER ';' END
+
+    NUMBER  shift, and go to state 86
+
+
+state 66
+
+   20 statements: statement ';' . statements
+
+    IF     shift, and go to state 40
+    WHILE  shift, and go to state 41
+    READ   shift, and go to state 42
+    WRITE  shift, and go to state 43
+    ID     shift, and go to state 10
+
+    ';'       reduce using rule 26 (statement)
+    $default  reduce using rule 21 (statements)
+
+    var          go to state 44
+    statements   go to state 87
+    statement    go to state 46
+    assignment   go to state 47
+    conditional  go to state 48
+    iterative    go to state 49
+    io           go to state 50
+
+
+state 67
+
+   17 loc_vars: ',' ID . loc_vars
+
+    ','  shift, and go to state 52
+
+    $default  reduce using rule 18 (loc_vars)
+
+    loc_vars  go to state 88
+
+
+state 68
+
+   15 local_declarations: BOOLEAN ID loc_vars ';' . local_declarations
+
+    BOOLEAN  shift, and go to state 32
+    INTEGER  shift, and go to state 33
+
+    $default  reduce using rule 16 (local_declarations)
+
+    local_declarations  go to state 89
+
+
+state 69
+
+   14 local_declarations: INTEGER ID loc_vars ';' . local_declarations
+
+    BOOLEAN  shift, and go to state 32
+    INTEGER  shift, and go to state 33
+
+    $default  reduce using rule 16 (local_declarations)
+
+    local_declarations  go to state 90
+
+
+state 70
+
+   40 log_expr: log_expr . AND log_expr
+   41         | log_expr . OR log_expr
+   42         | NOT log_expr .
+
+    AND  shift, and go to state 77
+    OR   shift, and go to state 78
+
+    AND       [reduce using rule 42 (log_expr)]
+    OR        [reduce using rule 42 (log_expr)]
+    $default  reduce using rule 42 (log_expr)
+
+
+state 71
+
+   38 arith_expr: ID '[' . arith_expr ']'
+
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 81
+
+    arith_expr  go to state 91
+
+
+state 72
+
+   35 arith_expr: arith_expr . MATHOP arith_expr
+   39           | '(' arith_expr . ')'
+   43 log_expr: arith_expr . RELOP arith_expr
+
+    MATHOP  shift, and go to state 74
+    RELOP   shift, and go to state 75
+    ')'     shift, and go to state 92
+
+
+state 73
+
+   40 log_expr: log_expr . AND log_expr
+   41         | log_expr . OR log_expr
+   44         | '(' log_expr . ')'
+
+    AND  shift, and go to state 77
+    OR   shift, and go to state 78
+    ')'  shift, and go to state 93
+
+
+state 74
+
+   35 arith_expr: arith_expr MATHOP . arith_expr
+
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 81
+
+    arith_expr  go to state 94
+
+
+state 75
+
+   43 log_expr: arith_expr RELOP . arith_expr
+
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 81
+
+    arith_expr  go to state 95
+
+
+state 76
+
+   28 conditional: IF log_expr THEN . statements ENDIF
+   29            | IF log_expr THEN . statements ELSE statements ENDIF
+
+    IF     shift, and go to state 40
+    WHILE  shift, and go to state 41
+    READ   shift, and go to state 42
+    WRITE  shift, and go to state 43
+    ID     shift, and go to state 10
+
+    ';'       reduce using rule 26 (statement)
+    $default  reduce using rule 21 (statements)
+
+    var          go to state 44
+    statements   go to state 96
+    statement    go to state 46
+    assignment   go to state 47
+    conditional  go to state 48
+    iterative    go to state 49
+    io           go to state 50
+
+
+state 77
+
+   40 log_expr: log_expr AND . log_expr
+
+    NOT     shift, and go to state 55
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 58
+
+    arith_expr  go to state 59
+    log_expr    go to state 97
+
+
+state 78
+
+   41 log_expr: log_expr OR . log_expr
+
+    NOT     shift, and go to state 55
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 58
+
+    arith_expr  go to state 59
+    log_expr    go to state 98
+
+
+state 79
+
+   30 iterative: WHILE log_expr DO . statements ENDWHILE
+
+    IF     shift, and go to state 40
+    WHILE  shift, and go to state 41
+    READ   shift, and go to state 42
+    WRITE  shift, and go to state 43
+    ID     shift, and go to state 10
+
+    ';'       reduce using rule 26 (statement)
+    $default  reduce using rule 21 (statements)
+
+    var          go to state 44
+    statements   go to state 99
+    statement    go to state 46
+    assignment   go to state 47
+    conditional  go to state 48
+    iterative    go to state 49
+    io           go to state 50
+
+
+state 80
+
+   31 io: READ '(' var . ')'
+
+    ')'  shift, and go to state 100
+
+
+state 81
+
+   39 arith_expr: '(' . arith_expr ')'
+
+    NUMBER  shift, and go to state 56
+    ID      shift, and go to state 57
+    '('     shift, and go to state 81
+
+    arith_expr  go to state 101
+
+
+state 82
+
+   32 io: WRITE '(' arith_expr . ')'
+   35 arith_expr: arith_expr . MATHOP arith_expr
+
+    MATHOP  shift, and go to state 74
+    ')'     shift, and go to state 102
+
+
+state 83
+
+   27 assignment: var '=' expr .
+
+    $default  reduce using rule 27 (assignment)
+
+
+state 84
+
+   33 expr: arith_expr .
+   35 arith_expr: arith_expr . MATHOP arith_expr
+   43 log_expr: arith_expr . RELOP arith_expr
+
+    MATHOP  shift, and go to state 74
+    RELOP   shift, and go to state 75
+
+    $default  reduce using rule 33 (expr)
+
+
+state 85
+
+   34 expr: log_expr .
+   40 log_expr: log_expr . AND log_expr
+   41         | log_expr . OR log_expr
+
+    AND  shift, and go to state 77
+    OR   shift, and go to state 78
+
+    $default  reduce using rule 34 (expr)
+
+
+state 86
+
+   19 body: BEG statements RETURN NUMBER . ';' END
+
+    ';'  shift, and go to state 103
+
+
+state 87
+
+   20 statements: statement ';' statements .
+
+    $default  reduce using rule 20 (statements)
+
+
+state 88
+
+   17 loc_vars: ',' ID loc_vars .
+
+    $default  reduce using rule 17 (loc_vars)
+
+
+state 89
+
+   15 local_declarations: BOOLEAN ID loc_vars ';' local_declarations .
+
+    $default  reduce using rule 15 (local_declarations)
+
+
+state 90
+
+   14 local_declarations: INTEGER ID loc_vars ';' local_declarations .
+
+    $default  reduce using rule 14 (local_declarations)
+
+
+state 91
+
+   35 arith_expr: arith_expr . MATHOP arith_expr
+   38           | ID '[' arith_expr . ']'
+
+    MATHOP  shift, and go to state 74
+    ']'     shift, and go to state 104
+
+
+state 92
+
+   39 arith_expr: '(' arith_expr ')' .
+
+    $default  reduce using rule 39 (arith_expr)
+
+
+state 93
+
+   44 log_expr: '(' log_expr ')' .
+
+    $default  reduce using rule 44 (log_expr)
+
+
+state 94
+
+   35 arith_expr: arith_expr . MATHOP arith_expr
+   35           | arith_expr MATHOP arith_expr .
+
+    MATHOP  shift, and go to state 74
+
+    MATHOP    [reduce using rule 35 (arith_expr)]
+    $default  reduce using rule 35 (arith_expr)
+
+
+state 95
+
+   35 arith_expr: arith_expr . MATHOP arith_expr
+   43 log_expr: arith_expr RELOP arith_expr .
+
+    MATHOP  shift, and go to state 74
+
+    $default  reduce using rule 43 (log_expr)
+
+
+state 96
+
+   28 conditional: IF log_expr THEN statements . ENDIF
+   29            | IF log_expr THEN statements . ELSE statements ENDIF
+
+    ELSE   shift, and go to state 105
+    ENDIF  shift, and go to state 106
+
+
+state 97
+
+   40 log_expr: log_expr . AND log_expr
+   40         | log_expr AND log_expr .
+   41         | log_expr . OR log_expr
+
+    $default  reduce using rule 40 (log_expr)
+
+
+state 98
+
+   40 log_expr: log_expr . AND log_expr
+   41         | log_expr . OR log_expr
+   41         | log_expr OR log_expr .
+
+    AND  shift, and go to state 77
+
+    $default  reduce using rule 41 (log_expr)
+
+
+state 99
+
+   30 iterative: WHILE log_expr DO statements . ENDWHILE
+
+    ENDWHILE  shift, and go to state 107
+
+
+state 100
+
+   31 io: READ '(' var ')' .
+
+    $default  reduce using rule 31 (io)
+
+
+state 101
+
+   35 arith_expr: arith_expr . MATHOP arith_expr
+   39           | '(' arith_expr . ')'
+
+    MATHOP  shift, and go to state 74
+    ')'     shift, and go to state 92
+
+
+state 102
+
+   32 io: WRITE '(' arith_expr ')' .
+
+    $default  reduce using rule 32 (io)
+
+
+state 103
+
+   19 body: BEG statements RETURN NUMBER ';' . END
+
+    END  shift, and go to state 108
+
+
+state 104
+
+   38 arith_expr: ID '[' arith_expr ']' .
+
+    $default  reduce using rule 38 (arith_expr)
+
+
+state 105
+
+   29 conditional: IF log_expr THEN statements ELSE . statements ENDIF
+
+    IF     shift, and go to state 40
+    WHILE  shift, and go to state 41
+    READ   shift, and go to state 42
+    WRITE  shift, and go to state 43
+    ID     shift, and go to state 10
+
+    ';'       reduce using rule 26 (statement)
+    $default  reduce using rule 21 (statements)
+
+    var          go to state 44
+    statements   go to state 109
+    statement    go to state 46
+    assignment   go to state 47
+    conditional  go to state 48
+    iterative    go to state 49
+    io           go to state 50
+
+
+state 106
+
+   28 conditional: IF log_expr THEN statements ENDIF .
+
+    $default  reduce using rule 28 (conditional)
+
+
+state 107
+
+   30 iterative: WHILE log_expr DO statements ENDWHILE .
+
+    $default  reduce using rule 30 (iterative)
+
+
+state 108
+
+   19 body: BEG statements RETURN NUMBER ';' END .
+
+    $default  reduce using rule 19 (body)
+
+
+state 109
+
+   29 conditional: IF log_expr THEN statements ELSE statements . ENDIF
+
+    ENDIF  shift, and go to state 110
+
+
+state 110
+
+   29 conditional: IF log_expr THEN statements ELSE statements ENDIF .
+
+    $default  reduce using rule 29 (conditional)

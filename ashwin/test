@@ -1,0 +1,16 @@
+decl
+integer a[10];
+boolean b, c[100];
+enddecl
+
+integer main () {
+decl
+integer a,b;
+boolean c,d;
+enddecl
+
+begin
+a=b+c/2;
+return 0;
+end
+}

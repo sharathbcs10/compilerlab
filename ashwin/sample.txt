@@ -1,0 +1,10 @@
+integer main() {
+decl
+integer x,y,z;
+enddecl
+begin
+x=y+z;
+w=u+v;
+return 0;
+end
+}
